@@ -1,0 +1,83 @@
+USE polyglot_academy;
+
+CREATE TABLE ALUNO (
+    ID_Aluno INT PRIMARY KEY AUTO_INCREMENT,
+    Nome_Completo VARCHAR(150) NOT NULL,
+    CPF VARCHAR(11) UNIQUE NOT NULL,
+    Data_Nascimento DATE NOT NULL,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    Telefone VARCHAR(20),
+    Endereco VARCHAR(255)
+);
+
+CREATE TABLE PROFESSOR (
+    ID_Professor INT PRIMARY KEY AUTO_INCREMENT,
+    Nome_Completo VARCHAR(150) NOT NULL,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    Telefone VARCHAR(20),
+    Especialidade VARCHAR(50) NOT NULL,
+    Data_Admissao DATE NOT NULL
+);
+
+CREATE TABLE CURSO (
+    ID_Curso INT PRIMARY KEY AUTO_INCREMENT,
+    Nome_Curso VARCHAR(100) UNIQUE NOT NULL,
+    Carga_Horaria_Total INT NOT NULL,
+    Valor_Mensalidade DECIMAL(10, 2) NOT NULL
+);
+
+CREATE TABLE MODULO (
+    ID_Modulo INT PRIMARY KEY AUTO_INCREMENT,
+    ID_Curso INT NOT NULL,
+    Nome_Modulo VARCHAR(100) NOT NULL,
+    Descricao TEXT,
+    Link_Conteudo VARCHAR(255),
+    FOREIGN KEY (ID_Curso) REFERENCES CURSO(ID_Curso)
+);
+
+CREATE TABLE MATRICULA (
+    ID_Matricula INT PRIMARY KEY AUTO_INCREMENT,
+    ID_Aluno INT NOT NULL,
+    ID_Curso INT NOT NULL,
+    Data_Matricula DATE NOT NULL,
+    Status_Matricula VARCHAR(20) NOT NULL,
+    FOREIGN KEY (ID_Aluno) REFERENCES ALUNO(ID_Aluno),
+    FOREIGN KEY (ID_Curso) REFERENCES CURSO(ID_Curso)
+);
+
+CREATE TABLE PAGAMENTO (
+    ID_Pagamento INT PRIMARY KEY AUTO_INCREMENT,
+    ID_Matricula INT NOT NULL,
+    Valor_Pago DECIMAL(10, 2) NOT NULL,
+    Data_Vencimento DATE NOT NULL,
+    Data_Pagamento DATE,
+    Status_Pagamento VARCHAR(20) NOT NULL,
+    FOREIGN KEY (ID_Matricula) REFERENCES MATRICULA(ID_Matricula)
+);
+
+CREATE TABLE AULA (
+    ID_Aula INT PRIMARY KEY AUTO_INCREMENT,
+    ID_Professor INT NOT NULL,
+    ID_Modulo INT NOT NULL,
+    ID_Aluno INT NOT NULL,
+    Data_Hora_Inicio DATETIME NOT NULL,
+    Duracao_Minutos INT NOT NULL,
+    Link_Reuniao VARCHAR(255),
+    Presenca BOOLEAN NOT NULL,
+    FOREIGN KEY (ID_Professor) REFERENCES PROFESSOR(ID_Professor),
+    FOREIGN KEY (ID_Modulo) REFERENCES MODULO(ID_Modulo),
+    FOREIGN KEY (ID_Aluno) REFERENCES ALUNO(ID_Aluno)
+);
+
+CREATE TABLE AVALIACAO (
+    ID_Avaliacao INT PRIMARY KEY AUTO_INCREMENT,
+    ID_Aluno INT NOT NULL,
+    ID_Modulo INT NOT NULL,
+    ID_Professor INT NOT NULL,
+    Nota DECIMAL(4, 2) NOT NULL,
+    Data_Lancamento DATETIME NOT NULL,
+    Feedback_Professor TEXT,
+    FOREIGN KEY (ID_Aluno) REFERENCES ALUNO(ID_Aluno),
+    FOREIGN KEY (ID_Modulo) REFERENCES MODULO(ID_Modulo),
+    FOREIGN KEY (ID_Professor) REFERENCES PROFESSOR(ID_Professor)
+);
