@@ -14,7 +14,10 @@ Este repositório contém os scripts SQL para a implementação e manipulação 
 
 O projeto utiliza 8 tabelas interligadas, representando o ciclo de vida do aluno na academia (Matrícula, Aulas, Pagamentos e Avaliações).
 
+### Diagrama Entidade-Relacionamento (DER)
 
+Este diagrama representa a estrutura lógica do banco de dados, mostrando as entidades e seus relacionamentos (1:N e N:M).
+![DER do Sistema Polyglot Academy](Diagrama.jpg)
 
 ## 🚀 3. Instruções de Execução
 
